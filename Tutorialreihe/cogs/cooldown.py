@@ -19,7 +19,7 @@ class Cooldown(commands.Cog):
 
         minutes = seconds / 60
         if minutes < 60:
-            return  f"{round(minutes)} Minuten"
+            return f"{round(minutes)} Minuten"
 
         hours = minutes / 60
         if hours < 60:

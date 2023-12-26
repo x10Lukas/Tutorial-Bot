@@ -7,13 +7,12 @@ class Activity(commands.Cog):
         self.bot = bot
 
     @app_commands.command(name="activity")
-    @app_commands.checks.has_role(1179050492530278482)
     @app_commands.choices(activity=[
         discord.app_commands.Choice(name='game', value=1),
         discord.app_commands.Choice(name='stream', value=2)
     ])
     async def activity(self, interaction: discord.Interaction, activity: discord.app_commands.Choice[int], name: str):
-        if activity == 1:
+        if activity.value == 1:
             act = discord.Game(name=name)
         else:
             act = discord.Streaming(name=name, url="https://www.twitch.tv/lukas9627")

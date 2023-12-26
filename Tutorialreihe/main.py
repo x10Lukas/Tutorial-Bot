@@ -1,18 +1,24 @@
 import discord
 from discord.ext import commands
+from dotenv import load_dotenv
 import os
 
 intents = discord.Intents.all()
 
 bot = commands.Bot(command_prefix="!", intents=intents)
+bot.remove_command('help')
 
 @bot.event
 async def on_ready():
     print(f"{bot.user} ist ready!")
-    await bot.load_extension("cogs.activity")
-    await bot.load_extension("cogs.admin")
-    await bot.load_extension("cogs.buttons")
-    await bot.load_extension("cogs.cooldown")
+    for filename in os.listdir("cogs"):
+        if filename.endswith(".py"):
+            cog_name = filename[:-3]
+            await bot.load_extension(f"cogs.{cog_name}")
+            print(f"cogs.{cog_name}")
+
     await bot.tree.sync()
 
-bot.run("MTE3ODA4NTU2ODQ4ODQxNTI3Mg.GpInVk.Zu5tF6Hmlh7ygNA31Xb1rkgNWcbLlf3m-X1KQw")
+if __name__ == "__main__":
+    load_dotenv()
+    bot.run(os.getenv("TOKEN"))
